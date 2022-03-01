@@ -1,0 +1,555 @@
+#include <iostream>
+#include<string>
+#include<algorithm>
+
+using namespace std;
+struct date
+{
+    int year;
+    int month;
+    int day;
+};
+struct librarians
+{
+    string libUsername;
+    string libPassword;
+};
+struct books
+{
+    string bookTitle;
+    int bookProdutionYear;
+    int bookNumberOfCopies;
+    string bookCategory;
+    int bookEdition;
+};
+struct user
+{
+    int id;
+    string name;
+    string email;
+    string password;
+    string accountType;
+    date creationDate;
+    int contactNumbers[3];
+};
+user newusers[1000];
+books librarybooks[5];
+int buingBook(string theBookName)
+{
+    int globalcounter = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        if (theBookName == librarybooks[i].bookTitle)
+        {
+            if (librarybooks[i].bookNumberOfCopies > 0)
+            {
+                globalcounter++;
+                cout << "Your book is available." << endl;
+                librarybooks[i].bookNumberOfCopies--;
+                break;
+            }
+            else
+                cout << "Sorry! your book is not available now." << endl;
+            break;
+        }
+        if (i == 4 && globalcounter == 0)
+        {
+            cout << "Sorry! your book is not available now." << endl;
+            break;
+        }
+    }
+    return globalcounter;
+}
+
+
+
+
+
+int main()
+{
+    int theChoiseNumber, numberOfNewUsers = 0, numberOfContacts, theBookProductionYear, todayDay, todayMounth, todayYear, counter = 0, c = 0, x, usercounter = 0;
+    char exit, todayChar;
+    string librarianUsername, librarianPassword, theBookName, theAccountType;
+
+    librarians lib1, lib2, lib3, lib4;
+    lib1 = { "mohamed","123x" };
+    lib2 = { "max","123y" };
+    lib3 = { "fatma","123z" };
+    lib4 = { "sarah","123s" };
+
+    librarybooks[0] = { "the idiot brain", 2016, 3, "fun", 10 };
+    librarybooks[1] = { "diamond dust", 2010, 20, "crime and suspense", 2 };
+    librarybooks[2] = { "the great gatsby", 1925, 1, "fiction", 203 };
+    librarybooks[3] = { "my sister's keeper", 2004, 29, "literature", 28 };
+    librarybooks[4] = { "into the wild", 1996, 31, "literature", 127 };
+
+    cout << "Welcome to our library, Sir!" << endl << "Here is our menu:" << endl;
+    cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+    cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+    cout << "Please enter the type of the option you want and use lower case letters ONLY:" << endl;
+    cin >> theChoiseNumber;
+    while (true)
+    {
+        if (theChoiseNumber == 1)
+        {
+            while (true)
+            {
+                cout << "Please enter your username:" << endl;
+                cin >> librarianUsername;
+                cout << "Please enter your password:" << endl;
+                cin >> librarianPassword;
+                if ((librarianUsername == "mohamed" && librarianPassword == "123x") || (librarianUsername == "max" && librarianPassword == "123y") || (librarianUsername == "fatma" && librarianPassword == "123z") || (librarianUsername == "sarah" && librarianPassword == "123s"))
+                {
+                    cout << "Now you will creat new accounts for the new users, please enter the number of the new users:" << endl;
+                    cin >> numberOfNewUsers;
+                    if (numberOfNewUsers < 1)
+                    {
+                        cout << "Please enter a valid number!" << endl;
+                        cin >> numberOfNewUsers;
+                    }
+                    for (int i = 0; i < numberOfNewUsers; i++)
+                    {
+                        usercounter++;
+                        cout << "Enter the Id of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].id;
+                        cout << "Enter the name of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].name;
+                        cout << "Enter the email of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].email;
+                        cout << "Enter the password of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].password;
+                        cout << "Enter the account type of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].accountType;
+                        cout << "Enter the day of the creation date of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].creationDate.day;
+                        cout << "Enter the month of the creation date of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].creationDate.month;
+                        cout << "Enter the year of the creation date of the user number " << i + 1 << " :" << endl;
+                        cin >> newusers[i].creationDate.year;
+                        cout << "Enter the number of contacts you want to add to this user WITH MAXIMUM 3 CONTACTS:" << endl;
+                        cin >> numberOfContacts;
+                        if (numberOfContacts > 3)
+                        {
+                            cout << "You have only 3 contacts to add. Please try again!" << endl;
+                            cin >> numberOfContacts;
+                        }
+                        else if (numberOfContacts < 1)
+                            continue;
+                        cout << "Enter the numbers:" << endl;
+                        for (int j = 0; j < numberOfContacts; j++)
+                            cin >> newusers[i].contactNumbers[j];
+
+                    }
+                    break;
+                }
+                else
+                {
+                    cout << "Your username or your password is not correct, if you want to try again press K or press any key to exit." << endl;
+                    cin >> exit;
+                    if (exit == 'k' || exit == 'K')
+                    {
+                        continue;
+                    }
+                    else
+                        break;
+                }
+            }
+            if (numberOfNewUsers == 0)
+            {
+                cout << "If you want to continue here is our menu:" << endl;
+                cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+                cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+                cout << "If you want to continue, press the number of your choise." << endl;
+                cout << "If you want to exit just press any key." << endl;
+                cin >> theChoiseNumber;
+                if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                    continue;
+                else
+                    break;
+            }
+            else
+            {
+                cout << "Now you have added " << numberOfNewUsers << " new users." << endl;
+                cout << "If you want to continue here is our menu:" << endl;
+                cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+                cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+                cout << "If you want to continue, press the number of your choise." << endl;
+                cout << "If you want to exit just press any key." << endl;
+                cin >> theChoiseNumber;
+                if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                    continue;
+                else
+                    break;
+            }
+            
+        }
+        else if (theChoiseNumber == 2)
+        {
+            while (true)
+            {
+                cout << "If you want to search about books using the name press 1." << endl;
+                cout << "If you want to search about books using the production year press 2." << endl;
+                cin >> theChoiseNumber;
+                if (theChoiseNumber == 1)
+                {
+                    cout << "Please enter the name of the book:" << endl;
+                    getline(cin, theBookName);
+                    getline(cin, theBookName);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (theBookName == librarybooks[i].bookTitle)
+                        {
+                            counter++;
+                            cout << "The name of the book is: " << librarybooks[i].bookTitle << "." << endl;
+                            cout << "The production year  of the book is: " << librarybooks[i].bookProdutionYear << "." << endl;
+                            cout << "The number of copies we have is: " << librarybooks[i].bookNumberOfCopies << "." << endl;
+                            cout << "The edition we have is: " << librarybooks[i].bookEdition << "." << endl;
+                            cout << "The category of the book is: " << librarybooks[i].bookCategory << endl;
+                            break;
+                        }
+                        if (i == 4 && counter == 0)
+                        {
+                            cout << "The book is not available now." << endl;
+                        }
+                    }
+                    break;
+                }
+                else if (theChoiseNumber == 2)
+                {
+                    cout << "Please enter the production year of the book:" << endl;
+                    cin >> theBookProductionYear;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (theBookProductionYear == librarybooks[i].bookProdutionYear)
+                        {
+                            counter++;
+                            cout << "The name of the book is: " << librarybooks[i].bookTitle << "." << endl;
+                            cout << "The production year  of the book is: " << librarybooks[i].bookProdutionYear << "." << endl;
+                            cout << "The number of copies we have is: " << librarybooks[i].bookNumberOfCopies << "." << endl;
+                            cout << "The edition we have is: " << librarybooks[i].bookEdition << "." << endl;
+                            cout << "The category of the book is: " << librarybooks[i].bookCategory << endl;
+                            break;
+                        }
+                        if (i == 4 && counter == 0)
+                        {
+                            cout << "The book is not available now." << endl;
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    cout << "Your answer is not correct, if you want to try again press K or press any key to exit." << endl;
+                    cin >> exit;
+                    if (exit == 'k' || exit == 'K')
+                    {
+                        continue;
+                    }
+                    else
+                        break;
+                }
+            }
+            cout << "Now you have searched for the book." << endl;
+            cout << "If you want to continue here is our menu:" << endl;
+            cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+            cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+            cout << "If you want to continue, press the number of your choise." << endl;
+            cout << "If you want to exit just press any key." << endl;
+            cin >> theChoiseNumber;
+            if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                continue;
+            else
+                break;
+        }
+        else if (theChoiseNumber == 3)
+        {
+            while (true)
+            {
+
+                cout << "Please enter your account type:" << endl;
+                cin >> theAccountType;
+                if (theAccountType == "staff")
+                {
+                    cout << "Enter the book name:" << endl;
+                    getline(cin, theBookName);
+                    getline(cin, theBookName);
+                    c = buingBook(theBookName);
+                    break;
+                }
+                else
+                {
+                    cout << "Your answer is not correct, if you want to try again press K or press any key to exit." << endl;
+                    cin >> exit;
+                    if (exit == 'k' || exit == 'K')
+                    {
+                        continue;
+                    }
+                    else
+                        break;
+
+                }
+            }
+            if (c > 0)
+            {
+                cout << "Now you have bought the book." << endl;
+                cout << "If you want to continue here is our menu:" << endl;
+                cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+                cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+                cout << "If you want to continue, press the number of your choise." << endl;
+                cout << "If you want to exit just press any key." << endl;
+                cin >> theChoiseNumber;
+                if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                    continue;
+                else
+                    break;
+            }
+            else
+            {
+                cout << "If you want to continue here is our menu:" << endl;
+                cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+                cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+                cout << "If you want to continue, press the number of your choise." << endl;
+                cout << "If you want to exit just press any key." << endl;
+                cin >> theChoiseNumber;
+                if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                    continue;
+                else
+                    break;
+            }
+        }
+        else if (theChoiseNumber == 4)
+        {
+            while (true)
+            {
+                cout << "Please enter your account type:" << endl;
+                getline(cin, theAccountType);
+                getline(cin, theAccountType);
+                if (theAccountType == "staff")
+                {
+                    cout << "Enter today's day in the next sequence: DAY/MOUNTH/YEAR." << endl;
+                    cin >> todayDay >> todayChar >> todayMounth >> todayChar >> todayYear;
+
+                    if (todayDay >= 7)
+                    {
+                        todayDay -= 6;
+                        for (int i = 0; i < 7; i++)
+                        {
+                            for (int j = 0; j < usercounter; j++)
+                            {
+                                if (todayDay == newusers[j].creationDate.day && todayMounth == newusers[j].creationDate.month && todayYear == newusers[j].creationDate.year)
+                                {
+                                    cout << "The data of the user number is: " << endl;
+                                    cout << "The ID of the user number " << j + 1 << " is: " << newusers[j].id << endl;
+                                    cout << "The name of the user number " << j + 1 << " is: " << newusers[j].name << endl;
+                                    cout << "The email of the user number " << j + 1 << " is: " << newusers[j].email << endl;
+                                    cout << "The password of the user number " << j + 1 << " is: " << newusers[j].password << endl;
+                                    cout << "The account type of the user number " << j + 1 << " is: " << newusers[j].accountType << endl;
+                                    cout << "The creation date of the account is: " << newusers[j].creationDate.day << "/" << newusers[j].creationDate.month << "/" << newusers[j].creationDate.year << endl;
+                                    cout << "The contact numbers of the user number " << j + 1 << " is: " << endl;
+                                    for (int k = 0; k < numberOfContacts; k++)
+                                        cout << "The " << k + 1 << "number is: " << 0 << newusers[j].contactNumbers[k] << endl;
+                                }
+                            }
+                            todayDay++;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        if (todayMounth == 1)
+                        {
+                            for (int i = 0; i < usercounter; i++)
+                            {
+                                if (todayYear == newusers[i].creationDate.year && todayMounth == newusers[i].creationDate.month)
+                                {
+                                    if (todayDay >= newusers[i].creationDate.day && newusers[i].creationDate.day >= 1)
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                                else if (newusers[i].creationDate.year == todayYear - 1 && newusers[i].creationDate.month == 12)
+                                {
+                                    if (newusers[i].creationDate.day <= 31 && newusers[i].creationDate.day > (31 - (7 - todayDay)))
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        else if (todayMounth == 3)
+                        {
+                            for (int i = 0; i < usercounter; i++)
+                            {
+                                if (todayYear == newusers[i].creationDate.year && todayMounth == newusers[i].creationDate.month)
+                                {
+                                    if (todayDay >= newusers[i].creationDate.day && newusers[i].creationDate.day >= 1)
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                                else if (newusers[i].creationDate.month == todayMounth - 1)
+                                {
+                                    if (newusers[i].creationDate.day <= 28 && newusers[i].creationDate.day > (28 - (7 - todayDay)))
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        else if (todayMounth == 2 || todayMounth == 4 || todayMounth == 6 || todayMounth == 8 || todayMounth == 9 || todayMounth == 11)
+                        {
+                            for (int i = 0; i < usercounter; i++)
+                            {
+                                if (todayYear == newusers[i].creationDate.year && todayMounth == newusers[i].creationDate.month)
+                                {
+                                    if (todayDay >= newusers[i].creationDate.day && newusers[i].creationDate.day >= 1)
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                                else if (newusers[i].creationDate.month == todayMounth - 1)
+                                {
+                                    if (newusers[i].creationDate.day <= 31 && newusers[i].creationDate.day > (31 - (7 - todayDay)))
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < usercounter; i++)
+                            {
+                                if (todayYear == newusers[i].creationDate.year && todayMounth == newusers[i].creationDate.month)
+                                {
+                                    if (todayDay >= newusers[i].creationDate.day && newusers[i].creationDate.day >= 1)
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                                else if (newusers[i].creationDate.month == todayMounth - 1)
+                                {
+                                    if (newusers[i].creationDate.day <= 30 && newusers[i].creationDate.day > (30 - (7 - todayDay)))
+                                    {
+                                        cout << "The data of the user number is: " << endl;
+                                        cout << "The ID of the user number " << i + 1 << " is: " << newusers[i].id << endl;
+                                        cout << "The name of the user number " << i + 1 << " is: " << newusers[i].name << endl;
+                                        cout << "The email of the user number " << i + 1 << " is: " << newusers[i].email << endl;
+                                        cout << "The password of the user number " << i + 1 << " is: " << newusers[i].password << endl;
+                                        cout << "The account type of the user number " << i + 1 << " is: " << newusers[i].accountType << endl;
+                                        cout << "The creation date of the account is: " << newusers[i].creationDate.day << "/" << newusers[i].creationDate.month << "/" << newusers[i].creationDate.year << endl;
+                                        cout << "The contact numbers of the user number " << i + 1 << " is: " << endl;
+                                        for (int k = 0; k < numberOfContacts; k++)
+                                            cout << "The " << k + 1 << "number is: " << 0 << newusers[i].contactNumbers[k] << endl;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "Your answer is not correct, if you want to try again press K or press any key to exit." << endl;
+                    cin >> exit;
+                    if (exit == 'k' || exit == 'K')
+                    {
+                        continue;
+                    }
+                    else
+                        break;
+                }
+            }
+            cout << "Now you have seen the history." << endl;
+            cout << "If you want to continue here is our menu:" << endl;
+            cout << "1. Create account for new user." << endl << "2. Search for books." << endl;
+            cout << "3. Buy books." << endl << "4. Show last week history." << endl;
+            cout << "If you want to continue, press the number of your choise." << endl;
+            cout << "If you want to exit just press any key." << endl;
+            cin >> theChoiseNumber;
+            if (theChoiseNumber == 1 || theChoiseNumber == 2 || theChoiseNumber == 3 || theChoiseNumber == 4)
+                continue;
+            else
+                break;
+        }
+        else
+        {
+            cout << "Your choise is not valid, if you want to try again press K or press any key to exit." << endl;
+            cin >> exit;
+            if (exit == 'k' || exit == 'K')
+            {
+                cout << "Please enter your choise again." << endl;
+                cin >> theChoiseNumber;
+            }
+            else
+                break;
+        }
+    }
+    return 0;
+}
